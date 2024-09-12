@@ -1,5 +1,6 @@
 // See https://aka.ms/vscode-remote/devcontainer.json for format details.
 {
+	"name": "ROS 1 Development Container",
 	"dockerFile": "Dockerfile",
 	"build": {
 		"args": {
@@ -14,17 +15,18 @@
 		"--security-opt=apparmor:unconfined",
 		"--volume=/tmp/.X11-unix:/tmp/.X11-unix",
 		"--volume=/mnt/wslg:/mnt/wslg",
-		"--ipc=host"
-		// uncomment to use intel iGPU
-		// "--device=/dev/dri"
-		// uncomment to use Nvidia GPU with Linux, https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html
-		// "--runtime=nvidia"
-		// uncomment to use Nvidia GPU with Windows WSL2
-		// "--volume=/usr/lib/wsl:/usr/lib/wsl",
-		// "--device=/dev/dxg",
-		// "--device=/dev/dri/card0",
-		// "--device=/dev/dri/renderD128",
-		// "--gpus=all"
+		"--env=DISPLAY",
+		"--env=TERM",
+		"--env=QT_X11_NO_MITSHM=1",
+		"--env=DRI_NAME=card1",
+		"--env=NVIDIA_VISIBLE_DEVICES=all",
+		"--env=NVIDIA_DRIVER_CAPABILITIES=all",
+		"--env=__NV_PRIME_RENDER_OFFLOAD=1",
+		"--env=__GLX_VENDOR_LIBRARY_NAME=nvidia",
+		"--volume=/tmp/.X11-unix:/tmp/.X11-unix",
+		"--volume=/etc/localtime:/etc/localtime:ro",
+		"--volume=/dev/:/dev/",
+		"--runtime=nvidia"
 	],
 	"containerEnv": {
 		"DISPLAY": "${localEnv:DISPLAY}", // Needed for GUI try ":0" for windows
